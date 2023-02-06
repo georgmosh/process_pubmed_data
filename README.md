@@ -14,11 +14,18 @@ For Pubmed indexing we used ElasticSearch v5.0.1 with Lucene v6.2.1
 python detect_and_download_new.py
 ```  
 
+This script craetes a directory and downloads one by one the data found in the ftp repository.
+You have to specify the `path` and the `year` in the script.
+
 ###### Create ElasticSearch index
 
 ```
 python create_index.py
 ```  
+
+If you want to use a newer version of ElasticSearch you have to change the mapping.
+You definitely have to change `text` to `string` and `keyword` to `string` with `not_analyzed` as analyzer.
+
 
 ###### Index data to the new index
 
