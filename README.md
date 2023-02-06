@@ -1,12 +1,37 @@
 
+# Data processing for PubMed baseline dump
 
+### Details
 This is a set of scripts to download tar.gz files from PubMed, trnsform them into json format and index them into an Elasticsearch engine.
 
-The Elasticsearch version used in these scripts is 5.0.
+For Pubmed indexing we used ElasticSearch v5.0.1 with Lucene v6.2.1 
 
-Please site our paper if you use this code:    
+### Steps:
 
----
+###### Download and verify data
+
+```
+python detect_and_download_new.py
+```  
+
+###### Create ElasticSearch index
+
+```
+python create_index.py
+```  
+
+###### Index data to the new index
+
+```
+python upload_pubmed_to_elastic.py
+```  
+ 
+
+
+### Cite
+If you find our work useful please cite our paper:
+
+```
 @inproceedings{pappas-androutsopoulos-2021-neural,
     title = "A Neural Model for Joint Document and Snippet Ranking in Question Answering for Large Document Collections",
     author = "Pappas, Dimitris  and
@@ -20,6 +45,6 @@ Please site our paper if you use this code:
     doi = "10.18653/v1/2021.acl-long.301",
     pages = "3896--3907"
 }
----
+```
 
 
