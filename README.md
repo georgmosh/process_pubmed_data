@@ -2,7 +2,7 @@
 # Data processing for PubMed baseline dump
 
 ### Details
-This is a set of scripts to download tar.gz files from PubMed, trnsform them into json format and index them into an Elasticsearch engine.
+This is a set of scripts to download `tar.gz` files from PubMed, transform them into `json` format and index them into an Elasticsearch engine.
 
 For Pubmed indexing we used ElasticSearch v5.0.1 with Lucene v6.2.1 
 
