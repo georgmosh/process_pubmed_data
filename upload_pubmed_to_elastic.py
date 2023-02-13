@@ -285,16 +285,16 @@ def get_OtherIDs(dato, root):
     OtherIDs = get_children_with_tag(OtherIDs,'ArticleId')
     dato['OtherIDs'] = [
         {
-            'Source'    : id.get('IdType').strip() if id.get('IdType') else '',
-            'id'        : id.text.strip() if id.text else '',
+            'Source' : id.get('IdType').strip() if id.get('IdType') else '',
+            'id' : id.text.strip() if id.text else '',
         } for id in OtherIDs
     ]
     for OtherID in OtherIDs:
         OtherID.getparent().remove(OtherID)
 
 def get_MeshHeadings(dato, elem):
-    MeshHeadingLists        = get_children_with_tag(elem, 'MeshHeadingList')
-    dato['MeshHeadings']    = []
+    MeshHeadingLists = get_children_with_tag(elem, 'MeshHeadingList')
+    dato['MeshHeadings'] = []
     for MeshHeadingList in MeshHeadingLists:
         MeshHeadings = get_children_with_tag(MeshHeadingList, 'MeshHeading')
         for MeshHeading in MeshHeadings:
@@ -315,7 +315,7 @@ def get_Authors(dato, Article):
     AuthorList = get_children_with_tag(Article, 'AuthorList')
     if(len(AuthorList)>0):
         AuthorList = AuthorList[0]
-        Authors     = get_children_with_tag(AuthorList, 'Author')
+        Authors = get_children_with_tag(AuthorList, 'Author')
         dato['Authors'] = []
         for Author in Authors:
             au = {
@@ -336,7 +336,7 @@ def get_PersonalNameSubjectList(dato, elem):
     PersonalNameSubjectList = get_children_with_tag(elem, 'PersonalNameSubjectList')
     if(len(PersonalNameSubjectList)>0):
         PersonalNameSubjectList = PersonalNameSubjectList[0]
-        PersonalNameSubjects     = get_children_with_tag(PersonalNameSubjectList, 'PersonalNameSubjects')
+        PersonalNameSubjects = get_children_with_tag(PersonalNameSubjectList, 'PersonalNameSubjects')
         dato['PersonalNameSubjects'] = []
         for PersonalNameSubject in PersonalNameSubjects:
             au = {
@@ -354,13 +354,13 @@ def get_Abstract(dato, Article):
     for Abstract in get_children_with_tag(Article, 'Abstract'):
         for item in Abstract.getchildren():
             if(item.tag.strip() != 'CopyrightInformation'):
-                Label       = item.get('Label')
+                Label = item.get('Label')
                 NlmCategory = item.get('NlmCategory')
                 dato['AbstractSegments'].append(
                     {
-                        'Label'         : Label,
-                        'NlmCategory'   : NlmCategory,
-                        'text'          : get_element_lower_text(item).strip()
+                        'Label' : Label,
+                        'NlmCategory' : NlmCategory,
+                        'text' : get_element_lower_text(item).strip()
                     }
                 )
                 if(Label is not None):
@@ -375,7 +375,7 @@ def get_ArticleDate(dato, Article):
     ArticleDate = get_children_with_tag(Article, 'ArticleDate')
     if(len(ArticleDate)>0):
         ArticleDate = ArticleDate[0]
-        dato['ArticleDate']  = get_children_with_tag(ArticleDate,'Day')[0].text.strip() + '/' \
+        dato['ArticleDate'] = get_children_with_tag(ArticleDate,'Day')[0].text.strip() + '/' \
                                +get_children_with_tag(ArticleDate,'Month')[0].text.strip() + '/' \
                                +get_children_with_tag(ArticleDate,'Year')[0].text.strip()
         ArticleDate.getparent().remove(ArticleDate)
@@ -405,10 +405,10 @@ def get_CommentsCorrectionsList(dato, elem):
         for CommentsCorrections in get_children_with_tag(CommentsCorrectionsList, 'CommentsCorrections'):
             dato['references'].append(
                 {
-                    'RefType'   : CommentsCorrections.get('RefType').strip(),
-                    'RefSource' : get_children_with_tag(CommentsCorrections, 'RefSource')[0].text.strip() if (len(get_children_with_tag(CommentsCorrections, 'RefSource'))>0 and get_children_with_tag(CommentsCorrections, 'RefSource')[0].text is not None) else '',
-                    'PMID'      : get_children_with_tag(CommentsCorrections, 'PMID')[0].text.strip() if (len(get_children_with_tag(CommentsCorrections, 'PMID'))>0 and get_children_with_tag(CommentsCorrections, 'PMID')[0].text is not None) else '',
-                    'Note'      : get_children_with_tag(CommentsCorrections, 'Note')[0].text.strip() if (len(get_children_with_tag(CommentsCorrections, 'Note'))>0 and get_children_with_tag(CommentsCorrections, 'Note')[0].text is not None) else '',
+                    'RefType': CommentsCorrections.get('RefType').strip(),
+                    'RefSource': get_children_with_tag(CommentsCorrections, 'RefSource')[0].text.strip() if (len(get_children_with_tag(CommentsCorrections, 'RefSource'))>0 and get_children_with_tag(CommentsCorrections, 'RefSource')[0].text is not None) else '',
+                    'PMID': get_children_with_tag(CommentsCorrections, 'PMID')[0].text.strip() if (len(get_children_with_tag(CommentsCorrections, 'PMID'))>0 and get_children_with_tag(CommentsCorrections, 'PMID')[0].text is not None) else '',
+                    'Note': get_children_with_tag(CommentsCorrections, 'Note')[0].text.strip() if (len(get_children_with_tag(CommentsCorrections, 'Note'))>0 and get_children_with_tag(CommentsCorrections, 'Note')[0].text is not None) else '',
                 }
             )
             CommentsCorrections.getparent().remove(CommentsCorrections)
@@ -417,7 +417,7 @@ def get_CommentsCorrectionsList(dato, elem):
 def get_Pagination(dato, Article):
     dato['Pagination'] = []
     for Pagination in get_children_with_tag(Article, 'Pagination'):
-        meds                = get_children_with_tag(Pagination, 'MedlinePgn')
+        meds = get_children_with_tag(Pagination, 'MedlinePgn')
         if(len(meds)>0):
             try:
                 dato['Pagination'].append(meds[0].text.strip())
@@ -466,9 +466,9 @@ def get_ChemicalList(dato, elem):
         for Chemical in get_children_with_tag(ChemicalList, 'Chemical'):
             dato['Chemicals'].append(
                 {
-                    'RegistryNumber'    : get_children_with_tag(Chemical, 'RegistryNumber')[0].text.strip(),
-                    'NameOfSubstance'   : get_children_with_tag(Chemical, 'NameOfSubstance')[0].text.strip(),
-                    'UI'                : get_children_with_tag(Chemical, 'NameOfSubstance')[0].get('UI').strip(),
+                    'RegistryNumber': get_children_with_tag(Chemical, 'RegistryNumber')[0].text.strip(),
+                    'NameOfSubstance': get_children_with_tag(Chemical, 'NameOfSubstance')[0].text.strip(),
+                    'UI': get_children_with_tag(Chemical, 'NameOfSubstance')[0].get('UI').strip(),
                 }
             )
             Chemical.getparent().remove(Chemical)
@@ -479,22 +479,22 @@ def get_OtherAbstract(dato, Article):
     if(len(OtherAbstract)>0):
         OtherAbstract = OtherAbstract[0]
         dato['OtherAbstract'] = {
-            'Type'      : OtherAbstract.get('Type').strip(),
-            'Language'  : OtherAbstract.get('Language').strip(),
-            'text'      : get_element_lower_text(OtherAbstract).strip(),
+            'Type': OtherAbstract.get('Type').strip(),
+            'Language': OtherAbstract.get('Language').strip(),
+            'text': get_element_lower_text(OtherAbstract).strip(),
         }
         OtherAbstract.getparent().remove(OtherAbstract)
 
 def get_SupplMeshList(dato, elem):
-    dato['SupplMeshList']    = []
-    MeshHeadingLists        = get_children_with_tag(elem, 'SupplMeshList')
+    dato['SupplMeshList'] = []
+    MeshHeadingLists = get_children_with_tag(elem, 'SupplMeshList')
     for MeshHeadingList in MeshHeadingLists:
         MeshHeadings = get_children_with_tag(MeshHeadingList, 'SupplMeshName')
         for MeshHeading in MeshHeadings:
             dato['SupplMeshList'].append({
-                'text'  : MeshHeading.text.strip(),
-                'Type'  : MeshHeading.get('Type').strip(),
-                'UI'    : MeshHeading.get('UI').strip(),
+                'text': MeshHeading.text.strip(),
+                'Type': MeshHeading.get('Type').strip(),
+                'UI': MeshHeading.get('UI').strip(),
             })
             MeshHeading.getparent().remove(MeshHeading)
         MeshHeadingList.getparent().remove(MeshHeadingList)
@@ -503,7 +503,7 @@ def get_InvestigatorList(dato, Article):
     InvestigatorList = get_children_with_tag(Article, 'InvestigatorList')
     if(len(InvestigatorList)>0):
         InvestigatorList = InvestigatorList[0]
-        Investigators     = get_children_with_tag(InvestigatorList, 'Investigator')
+        Investigators = get_children_with_tag(InvestigatorList, 'Investigator')
         dato['Investigators'] = []
         for Investigator in Investigators:
             au = {
@@ -528,7 +528,7 @@ def get_NumberOfReferences(dato, Article):
         NumberOfReferences.getparent().remove(NumberOfReferences)
 
 def get_element_lower_text(element, joiner=' '):
-    r2  =  create_new_xml_from_element(element)
+    r2 = create_new_xml_from_element(element)
     return joiner.join(r2.xpath("//text()")).replace('\n',' ')
 
 def get_pmid(dato, elem):
@@ -546,8 +546,8 @@ def get_CitationSubset(dato, elem):
 def get_DateCreated(dato, elem):
     ttt = get_children_with_tag(elem,'DateCreated')
     if(len(ttt)>0):
-        DateCreated   = ttt[0]
-        dato['DateCreated']  = get_children_with_tag(DateCreated,'Day')[0].text.strip() + '/' +get_children_with_tag(DateCreated,'Month')[0].text.strip() + '/' +get_children_with_tag(DateCreated,'Year')[0].text.strip()
+        DateCreated = ttt[0]
+        dato['DateCreated'] = get_children_with_tag(DateCreated,'Day')[0].text.strip() + '/' +get_children_with_tag(DateCreated,'Month')[0].text.strip() + '/' +get_children_with_tag(DateCreated,'Year')[0].text.strip()
         DateCreated.getparent().remove(DateCreated)
     return None
 
@@ -555,7 +555,7 @@ def get_DateRevised(dato, elem):
     DateRevised = get_children_with_tag(elem, 'DateRevised')
     if(len(DateRevised)>0):
         DateRevised = DateRevised[0]
-        dato['DateRevised']  = get_children_with_tag(DateRevised,'Day')[0].text.strip() + '/' +get_children_with_tag(DateRevised,'Month')[0].text.strip() + '/' +get_children_with_tag(DateRevised,'Year')[0].text.strip()
+        dato['DateRevised'] = get_children_with_tag(DateRevised,'Day')[0].text.strip() + '/' +get_children_with_tag(DateRevised,'Month')[0].text.strip() + '/' +get_children_with_tag(DateRevised,'Year')[0].text.strip()
         DateRevised.getparent().remove(DateRevised)
 
 def get_DateCompleted(dato, elem):
@@ -605,11 +605,11 @@ def get_DataBankList(dato, Article):
                         AccessionNumber.getparent().remove(AccessionNumber)
                     AccessionNumberList.getparent().remove(AccessionNumberList)
                 AccessionNumbers = list(set(AccessionNumbers))
-                db_name          = get_children_with_tag(DataBank, 'DataBankName')
+                db_name = get_children_with_tag(DataBank, 'DataBankName')
                 dato['DataBankList'].append(
                     {
-                        'DataBankName'      : db_name[0].text.strip(),
-                        'AccessionNumbers'  : AccessionNumbers
+                        'DataBankName': db_name[0].text.strip(),
+                        'AccessionNumbers': AccessionNumbers
                     }
                 )
                 db_name[0].getparent().remove(db_name[0])
@@ -625,9 +625,9 @@ def get_ELocationID(dato, Article):
     for ELocationID in ELocationIDs:
         dato['ELocationIDs'].append(
             {
-                'EIdType'   : ELocationID.get('EIdType').strip(),
-                'ValidYN'   : ELocationID.get('ValidYN').strip(),
-                'value'     : ELocationID.text.strip()
+                'EIdType': ELocationID.get('EIdType').strip(),
+                'ValidYN': ELocationID.get('ValidYN').strip(),
+                'value': ELocationID.text.strip()
             }
         )
         ELocationID.getparent().remove(ELocationID)
@@ -637,17 +637,17 @@ def get_Journal_info(dato, Article):
         dato['Journal'] = {}
         ch1 = get_children_with_tag(Article, 'Journal')
         if(len(ch1)>0):
-            ch1     = ch1[0]
-            tit     = get_children_with_tag(ch1, 'Title')[0]
+            ch1 = ch1[0]
+            tit = get_children_with_tag(ch1, 'Title')[0]
             #
-            iso     = get_children_with_tag(ch1, 'ISOAbbreviation')
+            iso = get_children_with_tag(ch1, 'ISOAbbreviation')
             if(len(iso)>0):
                 iso_text = iso[0].text.strip()
                 iso[0].getparent().remove(iso[0])
             else:
                 iso_text = None
             #
-            issn    = get_children_with_tag(ch1, 'ISSN')
+            issn = get_children_with_tag(ch1, 'ISSN')
             if(len(issn)>0):
                 issn_text = issn[0].text.strip()
                 issn[0].getparent().remove(issn[0])
@@ -659,25 +659,25 @@ def get_Journal_info(dato, Article):
                 'ISSN'              : issn_text,
                 'JournalIssue'      : {}
             }
-            ji      = get_children_with_tag(ch1, 'JournalIssue')[0]
+            ji = get_children_with_tag(ch1, 'JournalIssue')[0]
             try:
                 vol = get_children_with_tag(ji, 'Volume')[0].text.strip()
             except:
                 vol = None
-            jdate       = get_children_with_tag(ji, 'PubDate')[0]
-            med_date    = get_children_with_tag(jdate, 'MedlineDate')
+            jdate = get_children_with_tag(ji, 'PubDate')[0]
+            med_date = get_children_with_tag(jdate, 'MedlineDate')
             if(len(med_date)>0):
                 le_date = med_date[0].text.strip()
             else:
                 try:
-                    dd  = get_children_with_tag(jdate, 'Day')[0].text.strip()
+                    dd = get_children_with_tag(jdate, 'Day')[0].text.strip()
                 except:
-                    dd  = 15
+                    dd = 15
                 try:
-                    mm  = get_children_with_tag(jdate, 'Month')[0].text.strip()
+                    mm = get_children_with_tag(jdate, 'Month')[0].text.strip()
                 except:
-                    mm  = 6
-                yy      = get_children_with_tag(jdate, 'Year')[0].text.strip()
+                    mm = 6
+                yy = get_children_with_tag(jdate, 'Year')[0].text.strip()
                 try:
                     le_date = "{} {} {}".format(dd, mm, yy)
                     le_date = parser.parse(le_date, dayfirst=True)
@@ -724,9 +724,9 @@ def replace_html_special(text):
     return text
 
 def do_for_one_pmid(root):
-    dato        = {}
-    elem        = get_children_with_tag(root, 'MedlineCitation')[0]
-    Article     = get_children_with_tag(elem, 'Article')[0]
+    dato = {}
+    elem = get_children_with_tag(root, 'MedlineCitation')[0]
+    Article = get_children_with_tag(elem, 'Article')[0]
     try:
         get_pmid(dato, elem)
         get_CitationSubset(dato, elem)
@@ -765,12 +765,12 @@ def do_for_one_pmid(root):
         tb = traceback.format_exc()
         print(tb)
     if 'ArticleTitle' in dato:
-        dato['ArticleTitle']    = replace_html_special(dato['ArticleTitle'])
+        dato['ArticleTitle'] = replace_html_special(dato['ArticleTitle'])
     if 'AbstractText' in dato:
-        dato['AbstractText']    = replace_html_special(dato['AbstractText'])
+        dato['AbstractText'] = replace_html_special(dato['AbstractText'])
     if 'AbstractSegments' in dato:
         for seg in dato['AbstractSegments']:
-            seg['text']         = replace_html_special(seg['text'])
+            seg['text'] = replace_html_special(seg['text'])
     return dato
 
 def create_pmid_body(pmid):
@@ -796,11 +796,11 @@ def create_an_action(elk_dato, the_id):
     if(the_id is None):
         pass
     else:
-        elk_dato['_id']  = the_id
+        elk_dato['_id'] = the_id
     ################
     elk_dato['_op_type'] = u'index'
-    elk_dato['_index']   = index
-    elk_dato['_type']    = doc_type
+    elk_dato['_index'] = index
+    elk_dato['_type'] = doc_type
     return elk_dato
 
 def upload_to_elk(finished=False):
@@ -875,15 +875,15 @@ def create_an_action_joint(elk_dato, the_id, index, doc_type):
     if(id is None):
         pass
     else:
-        elk_dato['_id']  = the_id
+        elk_dato['_id'] = the_id
     ################
     elk_dato['_op_type'] = u'index'
-    elk_dato['_index']   = index
-    elk_dato['_type']    = doc_type
+    elk_dato['_index'] = index
+    elk_dato['_type'] = doc_type
     return elk_dato
 
-index_joint     = 'pubmed_abstracts_joint_0_1'
-doc_type_joint  = 'abstract_map_joint_0_1'
+index_joint = 'pubmed_abstracts_joint_0_1'
+doc_type_joint = 'abstract_map_joint_0_1'
 
 es = Elasticsearch([
         # ELasticsearch INGESTORS
@@ -895,15 +895,15 @@ es = Elasticsearch([
     retry_on_timeout=True
 )
 
-index       = 'pubmed_abstracts_0_1'
-doc_type    = 'abstract_map_0_1'
+index = 'pubmed_abstracts_0_1'
+doc_type = 'abstract_map_0_1'
 
-din         = sys.argv[1]
-gr_eq       = int(sys.argv[2])
-l_eq        = int(sys.argv[3])
-year        = '23'
+din = sys.argv[1]
+gr_eq = int(sys.argv[2])
+l_eq = int(sys.argv[3])
+year = '23'
 
-fs          = [
+fs = [
     din+f for f in os.listdir(din)
     if (
         f.endswith('.xml.gz')
@@ -915,24 +915,24 @@ fs          = [
 ]
 fs.sort(reverse=False)
 
-fc      = 0
-b_size  = 100
+fc = 0
+b_size = 100
 b_size_joint = 100
 actions = []
 actions_joint = []
 for file_gz in fs: #[fromm:too]:
     fc += 1
     print(file_gz)
-    infile      = gzip.open(file_gz)
-    content     = infile.read()
-    content     = replace_weird_stuff(content)
-    children    = etree.fromstring(content).getchildren()
-    ch_counter  = 0
+    infile = gzip.open(file_gz)
+    content = infile.read()
+    content = replace_weird_stuff(content)
+    children = etree.fromstring(content).getchildren()
+    ch_counter = 0
     pbar = tqdm(children)
     for ch_tree in pbar:
         ch_counter += 1
         for elem in ch_tree.iter(tag='PubmedArticle'):
-            dato        = do_for_one_pmid(elem)
+            dato = do_for_one_pmid(elem)
             if('pmid' in dato):
                 if ('DateCompleted' not in dato):
                     if ('ArticleDate' in dato):
