@@ -8,10 +8,10 @@ base_urls = [
 	'ftp://ftp.ncbi.nlm.nih.gov/pubmed/baseline/',
 	'ftp://ftp.ncbi.nlm.nih.gov/pubmed/updatefiles/'
 ]
-diridiri = './pubmed_updates_2023/'
+dir_xml_local = './pubmed_updates_2023/'
 
-if not os.path.exists(diridiri):
-	os.makedirs(diridiri)
+if not os.path.exists(dir_xml_local):
+	os.makedirs(dir_xml_local)
 
 for base_url in base_urls:
 	with urllib.request.urlopen(base_url) as response:
@@ -23,7 +23,7 @@ for base_url in base_urls:
 				fpath = line.split()[-1]
 				i = int(fpath.replace('.xml.gz', '').replace('pubmed{}n'.format(year),''))
 				file_url = '{}{}'.format(base_url, fpath)
-				opath = os.path.join(diridiri, fpath)
+				opath = os.path.join(dir_xml_local, fpath)
 				if not os.path.exists(opath):
 					command = 'wget {} -O {}'.format(file_url, opath)
 					print(command)
@@ -38,4 +38,3 @@ for base_url in base_urls:
 							print(command)
 							os.system(command)
 
-# python3.6 detect_and_download_new.py
